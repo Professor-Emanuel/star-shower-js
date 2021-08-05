@@ -3,7 +3,7 @@
 /*SO I ADDED THE UTILITY FUNCTIONS DIRECTLY IN THE CODE*/
 /*PS: I work in VS Code*/
 
-//Utility Functions
+//Utility Functions In case of need!
 function randomIntFromRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
@@ -23,7 +23,7 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
 canvas.width = innerWidth;
-canvas.height = innerWidth;
+canvas.height = innerHeight;
 
 let timer = 0;
 let stars = [];
@@ -196,6 +196,24 @@ function Explosion(star){
     }
 }
 
+function createMountainRange(mountainAmount, height, color){
+    for(var i=0; i < mountainAmount; i++){
+        var mountainWidth = canvas.width / mountainAmount;
+
+        //draw triangle
+        ctx.beginPath();
+            ctx.moveTo(i * mountainWidth, canvas.height);
+            ctx.lineTo(i * mountainWidth + mountainWidth + 325, canvas.height);
+
+            //triangle peak
+            ctx.lineTo(i * mountainWidth + mountainWidth/2, canvas.height - height);
+            ctx.lineTo(i * mountainWidth -325, canvas.height);
+            ctx.fillStyle = color;
+            ctx.fill();
+        ctx.closePath();
+    }
+}
+
 //Implementation
 for(let i = 0; i< 20; i++){
     miniStars.push(new MiniStar());        
@@ -210,6 +228,10 @@ function animate(){
     for(let i=0; i<miniStars.length; i++){
         miniStars[i].draw();
     }
+
+    createMountainRange(3, canvas.height - 30, '#104551');
+    createMountainRange(2, canvas.height/0.95 - 90, '#20354E');
+    createMountainRange(3, canvas.height - 240, '#105071');
 
     ctx.fillStyle = "#182028";
     ctx.fillRect(0, canvas.height - groundHeight, canvas.width, groundHeight);
